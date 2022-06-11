@@ -1,0 +1,8 @@
+<!--This XML file contains the gestures of the database.-->
+<Gestures>
+  <Gesture>
+    <ID>0</ID>
+    <NAME>mkmkProgress_Right</NAME>
+    <SEMANTIC>mkmkPR</SEMANTIC>
+  </Gesture>
+</Gestures>
