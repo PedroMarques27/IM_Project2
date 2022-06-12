@@ -2,7 +2,37 @@
 <Gestures>
   <Gesture>
     <ID>0</ID>
-    <NAME>mkmkProgress_Right</NAME>
-    <SEMANTIC>mkmkPR</SEMANTIC>
+    <NAME>BothArmsUp</NAME>
+    <SEMANTIC>BothAU</SEMANTIC>
+  </Gesture>
+  <Gesture>
+    <ID>1</ID>
+    <NAME>Clap</NAME>
+    <SEMANTIC>Clap</SEMANTIC>
+  </Gesture>
+  <Gesture>
+    <ID>2</ID>
+    <NAME>OpenHand</NAME>
+    <SEMANTIC>OpenH</SEMANTIC>
+  </Gesture>
+  <Gesture>
+    <ID>3</ID>
+    <NAME>RaiseArm</NAME>
+    <SEMANTIC>RaiseA</SEMANTIC>
+  </Gesture>
+  <Gesture>
+    <ID>4</ID>
+    <NAME>Stomp</NAME>
+    <SEMANTIC>Stomp</SEMANTIC>
+  </Gesture>
+  <Gesture>
+    <ID>5</ID>
+    <NAME>Swipe</NAME>
+    <SEMANTIC>Swipe</SEMANTIC>
+  </Gesture>
+  <Gesture>
+    <ID>6</ID>
+    <NAME>ThumbsUp</NAME>
+    <SEMANTIC>ThumbsU</SEMANTIC>
   </Gesture>
 </Gestures>

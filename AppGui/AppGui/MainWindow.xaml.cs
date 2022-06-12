@@ -59,7 +59,9 @@ namespace AppGui
             
             string[] repeat = { "Desculpe, não percebi, pode repetir?", "Não o consegui ouvir, pode repetir por favor?", "Poderia repetir se faz favor? Não percebi bem" };
             Random r = new Random();
-            float confidence = float.Parse(json.confidence[0].ToString());
+            float confidence = float.Parse(json.recognized[2].ToString());
+            string command= json.recognized[1].ToString();
+            Console.WriteLine(json.ToString());
             if(0.35<confidence && confidence<0.75)
                 sendMessageToTts(repeat[r.Next(0, 2)]);
 
@@ -132,13 +134,7 @@ namespace AppGui
                         }
                         break;
 
-                    case "END":
-                        if (webDriver.FindElements(By.XPath("//button[@class='stop-game-control-button-container with-tip-top-right-button-ctn']")).Count() > 0)
-                        {
-                            webDriver.FindElement(By.XPath("//button[@class='stop-game-control-button-container with-tip-top-right-button-ctn']")).Click();
-                            sendMessageToTts("Jogo terminará na próxima ronda");
-                        }
-                        break;
+                  
 
                     case "OPTIONS":
 
@@ -158,9 +154,11 @@ namespace AppGui
                         catch { }
                         break;
 
-                    case "PAUSE":
+                    case "Clap":
                         if (webDriver.FindElements(By.XPath("//button[@class='button-1 dark-gray small-button pause-game-button not-paused']")).Count() > 0)
                             webDriver.FindElement(By.XPath("//button[@class='button-1 dark-gray small-button pause-game-button not-paused']")).Click();
+                        if (webDriver.FindElements(By.XPath("//button[@class='button-1 dark-gray small-button pause-game-button paused']")).Count() > 0)
+                            webDriver.FindElement(By.XPath("//button[@class='button-1 dark-gray small-button pause-game-button paused']")).Click();
                         break;
 
                     case "PLAYERS":
@@ -180,12 +178,8 @@ namespace AppGui
                         catch { }
                         break;
 
-                    case "UNPAUSE":
-                        if (webDriver.FindElements(By.XPath("//button[@class='button-1 dark-gray small-button pause-game-button paused']")).Count() > 0)
-                            webDriver.FindElement(By.XPath("//button[@class='button-1 dark-gray small-button pause-game-button paused']")).Click();
-                        break;
 
-                    case "RAISE":
+                    case "RaiseA":
                         try
                         {
                             try
@@ -204,7 +198,7 @@ namespace AppGui
                         catch { }
                         break;
 
-                    case "FOLD":
+                    case "Stomp":
                         try
                         {
                             try
@@ -217,7 +211,7 @@ namespace AppGui
                         catch { }
                         break;
 
-                    case "CHECK":
+                    case "Swipe":
                         try
                         {
                             try
