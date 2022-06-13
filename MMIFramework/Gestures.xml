@@ -2,8 +2,8 @@
 <Gestures>
   <Gesture>
     <ID>0</ID>
-    <NAME>BothArmsUp</NAME>
-    <SEMANTIC>BothAU</SEMANTIC>
+    <NAME>Both</NAME>
+    <SEMANTIC>Both</SEMANTIC>
   </Gesture>
   <Gesture>
     <ID>1</ID>
@@ -12,13 +12,13 @@
   </Gesture>
   <Gesture>
     <ID>2</ID>
-    <NAME>OpenHand</NAME>
-    <SEMANTIC>OpenH</SEMANTIC>
+    <NAME>Open_Right</NAME>
+    <SEMANTIC>OpenR</SEMANTIC>
   </Gesture>
   <Gesture>
     <ID>3</ID>
-    <NAME>RaiseArm</NAME>
-    <SEMANTIC>RaiseA</SEMANTIC>
+    <NAME>Raise</NAME>
+    <SEMANTIC>Raise</SEMANTIC>
   </Gesture>
   <Gesture>
     <ID>4</ID>
@@ -32,7 +32,7 @@
   </Gesture>
   <Gesture>
     <ID>6</ID>
-    <NAME>ThumbsUp</NAME>
-    <SEMANTIC>ThumbsU</SEMANTIC>
+    <NAME>Thumb</NAME>
+    <SEMANTIC>Thumb</SEMANTIC>
   </Gesture>
 </Gestures>
