@@ -3,7 +3,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Shapes;
 using System.Xml.Linq;
 using mmisharp;
 using Newtonsoft.Json;
@@ -15,6 +14,7 @@ using HtmlAgilityPack;
 using System.Media;
 using System.Speech.Synthesis;
 using System.Collections.Generic;
+using System.Speech.AudioFormat;
 
 namespace AppGui
 {
@@ -32,16 +32,6 @@ namespace AppGui
 
         public MainWindow()
         {
-
-            // Initialize a new instance of the SpeechSynthesizer.  
-            SpeechSynthesizer synth = new SpeechSynthesizer();
-
-            // Configure the audio output.   
-            synth.SetOutputToDefaultAudioDevice();
-
-            // Speak a string.  
-            synth.Speak("This example demonstrates a basic use of Speech Synthesizer");
-
             //Creates the ChomeDriver object, Executes tests on Google Chrome
             string path = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
 
@@ -49,7 +39,10 @@ namespace AppGui
             webDriver = new ChromeDriver(path + @"/driver/");
             webDriver.Navigate().GoToUrl("https://www.pokernow.club/start-game");
 
-            mmiC = new MmiCommunication("localhost",8000, "User1", "GUI");
+
+
+
+            mmiC = new MmiCommunication("localhost", 8000, "User1", "GUI");
             mmiC.Message += MmiC_Message;
             mmiC.Start();
 
@@ -66,8 +59,6 @@ namespace AppGui
             var com = doc.Descendants("command").FirstOrDefault().Value;
             dynamic json = JsonConvert.DeserializeObject(com);
 
-            string[] repeat = { "Desculpe, não percebi, pode repetir?", "Não o consegui ouvir, pode repetir por favor?", "Poderia repetir se faz favor? Não percebi bem" };
-            Random r = new Random();
             float confidence = float.Parse(json.recognized[2].ToString());
             string command= json.recognized[1].ToString();
             int commandId = int.Parse(json.recognized[0].ToString());
@@ -79,7 +70,7 @@ namespace AppGui
             }
             switch (commandId)
             {
-                case 0: // OPTIONS - both arms up
+                case 0: // PLAYERS - both arms up
                     try
                     {
                         if (webDriver.FindElements(By.XPath("//div[@class='top-buttons ']//button[@class='top-buttons-button options ']")).Count() > 0)
@@ -149,8 +140,7 @@ namespace AppGui
                         try
                         {
                             webDriver.FindElement(By.XPath("//div[@class='action-buttons game-decisions']//button[@class='button-1 with-tip fold red ']")).Click();
-                            Speak("O jogador desistiu");
-                            
+                        }
                         catch { }
                     }
                     catch { }
@@ -162,7 +152,7 @@ namespace AppGui
                         try
                         {
                             webDriver.FindElement(By.XPath("//div[@class='action-buttons game-decisions']//button[@class='button-1 with-tip check green ']")).Click();
-                            Speak("O jogador passou");
+                            
                         }
                         catch { }
                     }
@@ -182,6 +172,7 @@ namespace AppGui
                     break;
             }
         }
-        
+
+
     }
 }

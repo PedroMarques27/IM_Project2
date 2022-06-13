@@ -1,0 +1,4 @@
+C:\Users\pedro\Documents\GitHub\IM_Project2\AppGui\AppGui\obj\x86\Debug\MainWindow.g.cs
+C:\Users\pedro\Documents\GitHub\IM_Project2\AppGui\AppGui\obj\x86\Debug\App.g.cs
+C:\Users\pedro\Documents\GitHub\IM_Project2\AppGui\AppGui\obj\x86\Debug\AppGui_MarkupCompile.cache
+C:\Users\pedro\Documents\GitHub\IM_Project2\AppGui\AppGui\obj\x86\Debug\AppGui_MarkupCompile.lref

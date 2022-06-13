@@ -4,7 +4,7 @@
 winexe
 C#
 .cs
-C:\Users\pedro\Documents\GitHub\IM_Project2\AppGui\AppGui\obj\Debug\
+C:\Users\pedro\Documents\GitHub\IM_Project2\AppGui\AppGui\obj\x86\Debug\
 AppGui
 none
 false
@@ -12,9 +12,9 @@ DEBUG;TRACE
 C:\Users\pedro\Documents\GitHub\IM_Project2\AppGui\AppGui\App.xaml
 11151548125
 
-6756381379
-20385381370
+5-2017746502
+19-953084534
 MainWindow.xaml;
 
-False
+True
 
