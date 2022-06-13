@@ -12,15 +12,19 @@ using System.IO;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.Events;
 using HtmlAgilityPack;
+using System.Media;
+using System.Speech.Synthesis;
 using System.Collections.Generic;
 
 namespace AppGui
 {
     public partial class MainWindow
     {
+
+
+
         private MmiCommunication mmiC;
 
-        private MmiCommunication mmiSender;
         private LifeCycleEvents lce;
         private MmiCommunication mmic;
         private IWebDriver webDriver;
@@ -28,6 +32,16 @@ namespace AppGui
 
         public MainWindow()
         {
+
+            // Initialize a new instance of the SpeechSynthesizer.  
+            SpeechSynthesizer synth = new SpeechSynthesizer();
+
+            // Configure the audio output.   
+            synth.SetOutputToDefaultAudioDevice();
+
+            // Speak a string.  
+            synth.Speak("This example demonstrates a basic use of Speech Synthesizer");
+
             //Creates the ChomeDriver object, Executes tests on Google Chrome
             string path = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
 
@@ -135,8 +149,8 @@ namespace AppGui
                         try
                         {
                             webDriver.FindElement(By.XPath("//div[@class='action-buttons game-decisions']//button[@class='button-1 with-tip fold red ']")).Click();
-                            sendMessageToTts("O jogador desistiu");
-                        }
+                            Speak("O jogador desistiu");
+                            
                         catch { }
                     }
                     catch { }
@@ -148,7 +162,7 @@ namespace AppGui
                         try
                         {
                             webDriver.FindElement(By.XPath("//div[@class='action-buttons game-decisions']//button[@class='button-1 with-tip check green ']")).Click();
-                            sendMessageToTts("O jogador passou");
+                            Speak("O jogador passou");
                         }
                         catch { }
                     }
@@ -168,15 +182,6 @@ namespace AppGui
                     break;
             }
         }
-
-        public void sendMessageToTts(String s)
-        {
-            mmic.Send(lce.NewContextRequest());
-
-            string json2 = "";
-            json2 += s;
-            var exNot = lce.ExtensionNotification(0 + "", 0 + "", 1, json2);
-            mmic.Send(exNot);            
-        }
+        
     }
 }
