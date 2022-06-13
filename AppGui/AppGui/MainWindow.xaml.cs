@@ -62,7 +62,7 @@ namespace AppGui
             float confidence = float.Parse(json.recognized[2].ToString());
             string command= json.recognized[1].ToString();
             int commandId = int.Parse(json.recognized[0].ToString());
-            Console.WriteLine(json.ToString());
+            Console.WriteLine(commandId);
 
 
                 if (webDriver.FindElements(By.XPath("//div[@class='config-warning-popover']//button")).Count() > 0)
@@ -81,7 +81,7 @@ namespace AppGui
                         try
                         {
                             IList<IWebElement> webElements = webDriver.FindElements(By.XPath("//div[@class='config-top-tabs']//button"));
-                            webElements[2].Click();
+                            webElements[1].Click();
                             break;
                         }
                         catch { }
@@ -100,10 +100,16 @@ namespace AppGui
                         {
                             try
                             {
-                            string current = webDriver.FindElement(By.XPath("//form[@class='raise-controller-form']//div[@class='value-input-ctn//input']")).GetAttribute("value");
+                            string current = webDriver.FindElement(By.XPath("//div[@class='raise-bet-value ']//div[@class='value-input-ctn']//input")).GetAttribute("value");
+                            
                             string money = webDriver.FindElement(By.XPath("//p[@class='blind-value']//span[@class='normal-value']")).GetAttribute("innerHTML");
+                            
                             int value = int.Parse(current) + int.Parse(money);
-                            webDriver.FindElement(By.XPath("//div[@class='value-input-ctn']//input")).SendKeys(money);
+
+                            IWebElement element = webDriver.FindElement(By.XPath("//div[@class='value-input-ctn']//input"));
+                            element.Click();
+                            element.Clear();
+                            element.SendKeys(value.ToString());
                         }
                             catch { }
                         }
@@ -156,7 +162,6 @@ namespace AppGui
                             try
                             {
                                 webDriver.FindElement(By.XPath("//div[@class='action-buttons game-decisions']//button[@class='button-1 call with-tip call green ']")).Click();
-                                sendMessageToTts("O jogador igualou");
                             }
                             catch { }
                         }
