@@ -61,82 +61,15 @@ namespace AppGui
             Random r = new Random();
             float confidence = float.Parse(json.recognized[2].ToString());
             string command= json.recognized[1].ToString();
+            int commandId = int.Parse(json.recognized[0].ToString());
             Console.WriteLine(json.ToString());
-            if(0.35<confidence && confidence<0.75)
-                sendMessageToTts(repeat[r.Next(0, 2)]);
 
-            else
-            {
+
                 if (webDriver.FindElements(By.XPath("//div[@class='config-warning-popover']//button")).Count() > 0)
                     webDriver.FindElement(By.XPath("//div[@class='config-warning-popover']//button")).Click();
-                switch ((String)json.recognized[0].ToString().Split(':')[0])
+                switch (commandId)
                 {
-                    case "START":
-                        if (webDriver.FindElements(By.XPath("//div[@class='out-game-decisions action-buttons']")).Count() > 0)
-                            webDriver.FindElement(By.XPath("//div[@class='out-game-decisions action-buttons']//button[@class='button-1 green highlighted']")).Click();
-
-                        break;
-
-                    case "SIT":
-                        String newbanco= ((String)json.recognized[0].ToString().Split(':')[1]).ToString();
-                        String dinheiro = ((String)json.recognized[0].ToString().Split(':')[2]).ToString();
-                        if (int.Parse(newbanco) > 10)
-                        {
-                            sendMessageToTts("Peço desculpa, esse banco não existe, escolha um entre 1 e 10");
-                        }
-                        else
-                        {
-                            try
-                            {
-                                webDriver.FindElement(By.XPath("//div[@class='table-player table-player-seat table-player-" + newbanco + "']/button")).Click();
-                                webDriver.FindElement(By.XPath("//input[@placeholder='Your Stack']")).SendKeys(dinheiro);
-                                IWebElement buttonText = webDriver.FindElement(By.XPath("//button[@class='button-1 med-button highlighted green']"));
-                                Console.WriteLine(buttonText.GetAttribute("innerHTML"));
-                                buttonText.Click();
-                                banco = newbanco;
-                                sendMessageToTts("Sentado no banco " + newbanco + " com " + dinheiro + " euros");
-                            }
-                            catch
-                            {
-                                sendMessageToTts("Já estás sentado no banco "+banco);
-                            }
-                        }
-                        break;
-
-                    case "VOICECHAT":
-                        if (webDriver.FindElements(By.XPath("//div[@class='conf-controls']//button")).Count() > 0)
-                        {
-                            switch (((String)json.recognized[0].ToString().Split(':')[1]).ToString())
-                            {
-                                case "0":
-                                    foreach (IWebElement elem in webDriver.FindElements(By.XPath("//div[@class='conf-controls']//button")))
-                                    {
-                                        if (elem.GetAttribute("class").Contains("active"))
-                                        {
-                                            elem.Click();
-                                        }
-                                    }
-                                    break;
-                                case "1":
-                                    var turnedOn = 0;
-                                    foreach (IWebElement elem in webDriver.FindElements(By.XPath("//div[@class='conf-controls']//button")))
-                                    {
-                                        if (!elem.GetAttribute("class").Contains("active"))
-                                        {
-                                            elem.Click();
-                                            turnedOn++;
-                                        }
-                                    }
-                                    if (turnedOn > 0)
-                                        sendMessageToTts("Atenção, a câmara está a ligar!");
-                                    break;
-                            }
-                        }
-                        break;
-
-                  
-
-                    case "OPTIONS":
+                    case 0:
 
                         try
                         {
@@ -154,51 +87,44 @@ namespace AppGui
                         catch { }
                         break;
 
-                    case "Clap":
+                    case 1:
                         if (webDriver.FindElements(By.XPath("//button[@class='button-1 dark-gray small-button pause-game-button not-paused']")).Count() > 0)
                             webDriver.FindElement(By.XPath("//button[@class='button-1 dark-gray small-button pause-game-button not-paused']")).Click();
                         if (webDriver.FindElements(By.XPath("//button[@class='button-1 dark-gray small-button pause-game-button paused']")).Count() > 0)
                             webDriver.FindElement(By.XPath("//button[@class='button-1 dark-gray small-button pause-game-button paused']")).Click();
                         break;
 
-                    case "PLAYERS":
-                        try
-                        {
-                            if (webDriver.FindElements(By.XPath("//div[@class='top-buttons ']//button[@class='top-buttons-button options ']")).Count() > 0)
-                                webDriver.FindElement(By.XPath("//div[@class='top-buttons ']//button[@class='top-buttons-button options ']")).Click();
-                        }
-                        catch { }
 
-                        try
-                        {
-                            IList<IWebElement> webElements = webDriver.FindElements(By.XPath("//div[@class='config-top-tabs']//button"));
-                            webElements[1].Click();
-                            break;
-                        }
-                        catch { }
-                        break;
-
-
-                    case "RaiseA":
+                    case 2:
                         try
                         {
                             try
                             {
-                                String dinheir = ((String)json.recognized[0].ToString().Split(':')[1]).ToString();
-                                Console.WriteLine(" dinheiro:          " + dinheir);
+                            string current = webDriver.FindElement(By.XPath("//form[@class='raise-controller-form']//div[@class='value-input-ctn//input']")).GetAttribute("value");
+                            string money = webDriver.FindElement(By.XPath("//p[@class='blind-value']//span[@class='normal-value']")).GetAttribute("innerHTML");
+                            int value = int.Parse(current) + int.Parse(money);
+                            webDriver.FindElement(By.XPath("//div[@class='value-input-ctn']//input")).SendKeys(money);
+                        }
+                            catch { }
+                        }
+                        catch { }
+                        break;
+                    case 3:
+                        try
+                        {
+                            try
+                            {
+                                
                                 webDriver.FindElement(By.XPath("//div[@class='action-buttons game-decisions']//button[@class='button-1 with-tip raise green']")).Click();
-                                sendMessageToTts("vou apostar");
-                                webDriver.FindElement(By.XPath("//div[@class='value-input-ctn']//input")).SendKeys(dinheir);
-                                sendMessageToTts("apostar" + dinheir + "euros");
-                                webDriver.FindElement(By.XPath("//div[@class='action-buttons']//input[@class='button-1 green bet']")).Click();
-                                sendMessageToTts("Aposta feita");
+
+              
                             }
                             catch { }
                         }
                         catch { }
                         break;
 
-                    case "Stomp":
+                    case 4:
                         try
                         {
                             try
@@ -211,7 +137,7 @@ namespace AppGui
                         catch { }
                         break;
 
-                    case "Swipe":
+                    case 5:
                         try
                         {
                             try
@@ -224,7 +150,7 @@ namespace AppGui
                         catch { }
                         break;
 
-                    case "BET":
+                    case 6:
                         try
                         {
                             try
@@ -237,7 +163,7 @@ namespace AppGui
                         catch { }
                         break;
                 }
-            }
+            
         }
        
         public void sendMessageToTts(String s)
