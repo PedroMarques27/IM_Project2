@@ -60,11 +60,11 @@ namespace AppGui
             var com = doc.Descendants("command").FirstOrDefault().Value;
             dynamic json = JsonConvert.DeserializeObject(com);
 
-            float confidence = double.Parse(json.recognized[2].ToString());
+            //float confidence = float.Parse(json.recognized[2].ToString());
             string command= json.recognized[1].ToString();
             int commandId = int.Parse(json.recognized[0].ToString());
 
-            this.ACTION.Content = String.Format("Received: [{2}]-{0}, with confidence of {1}%\n", command, confidence * 100, commandId);
+            //this.ACTION.Content = String.Format("Received: [{2}]-{0}, with confidence of {1}%\n", command, confidence * 100, commandId);
 
             if (webDriver.FindElements(By.XPath("//div[@class='config-warning-popover']//button")).Count() > 0)
             { 
