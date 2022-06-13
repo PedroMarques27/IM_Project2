@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AppGui"
         mc:Ignorable="d"
-        Title="MainWindow" Height="100" Width="200">
-    <Label x:Name="ACTION" Content="App a funcionar, Diz olá à Ema" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Center" RenderTransformOrigin="0,0" Height="50"/>
+        Title="MainWindow" Height="100" Width="400">
 
+    <Label x:Name="ACTION" Content="Working" HorizontalAlignment="Center" Margin="19,10,0,10.4" VerticalAlignment="Center" RenderTransformOrigin="0,0" Height="50" Width="362">
+
+    </Label>
 </Window>

@@ -14,11 +14,11 @@ using HtmlAgilityPack;
 using System.Media;
 using System.Speech.Synthesis;
 using System.Collections.Generic;
-using System.Speech.AudioFormat;
+using System.Windows.Controls;
 
 namespace AppGui
 {
-    public partial class MainWindow
+    public partial class MainWindow: Window
     {
 
 
@@ -32,6 +32,7 @@ namespace AppGui
 
         public MainWindow()
         {
+            InitializeComponent();
             //Creates the ChomeDriver object, Executes tests on Google Chrome
             string path = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
 
@@ -40,16 +41,16 @@ namespace AppGui
             webDriver.Navigate().GoToUrl("https://www.pokernow.club/start-game");
 
 
-
-
             mmiC = new MmiCommunication("localhost", 8000, "User1", "GUI");
             mmiC.Message += MmiC_Message;
             mmiC.Start();
 
+  
             //init LifeCycleEvents..
             lce = new LifeCycleEvents("APP", "TTS", "User1", "na", "command"); // LifeCycleEvents(string source, string target, string id, string medium, string mode
             // MmiCommunication(string IMhost, int portIM, string UserOD, string thisModalityName)
             mmic = new MmiCommunication("localhost", 8000, "User1", "GUI");
+
         }
 
         private void MmiC_Message(object sender, MmiEventArgs e)
@@ -59,15 +60,18 @@ namespace AppGui
             var com = doc.Descendants("command").FirstOrDefault().Value;
             dynamic json = JsonConvert.DeserializeObject(com);
 
-            float confidence = float.Parse(json.recognized[2].ToString());
+            float confidence = double.Parse(json.recognized[2].ToString());
             string command= json.recognized[1].ToString();
             int commandId = int.Parse(json.recognized[0].ToString());
-            Console.WriteLine(commandId);
+
+            this.ACTION.Content = String.Format("Received: [{2}]-{0}, with confidence of {1}%\n", command, confidence * 100, commandId);
 
             if (webDriver.FindElements(By.XPath("//div[@class='config-warning-popover']//button")).Count() > 0)
             { 
                 webDriver.FindElement(By.XPath("//div[@class='config-warning-popover']//button")).Click();
             }
+
+
             switch (commandId)
             {
                 case 0: // PLAYERS - both arms up
